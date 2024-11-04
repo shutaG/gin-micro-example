@@ -3,7 +3,9 @@
 package main
 
 import (
+	"gin-micro-example/grpc"
 	"gin-micro-example/internal/ioc"
+	"gin-micro-example/internal/service"
 	"gin-micro-example/internal/web"
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
@@ -14,6 +16,16 @@ func InitWebServer() *gin.Engine {
 		ioc.InitGinMiddlewares,
 		ioc.InitWebServer,
 		web.NewUserHandler,
+		service.NewUserService,
 	)
 	return gin.Default()
+}
+func InitGrpcServer() *AppGrpcServe {
+	wire.Build(
+		service.NewUserService,
+		grpc.NewUserServiceServer,
+		ioc.NewGrpcServer,
+		wire.Struct(new(AppGrpcServe), "*"),
+	)
+	return &AppGrpcServe{}
 }

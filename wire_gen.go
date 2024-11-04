@@ -7,7 +7,9 @@
 package main
 
 import (
+	"gin-micro-example/grpc"
 	"gin-micro-example/internal/ioc"
+	"gin-micro-example/internal/service"
 	"gin-micro-example/internal/web"
 	"github.com/gin-gonic/gin"
 )
@@ -16,7 +18,18 @@ import (
 
 func InitWebServer() *gin.Engine {
 	v := ioc.InitGinMiddlewares()
-	userHandler := web.NewUserHandler()
+	userService := service.NewUserService()
+	userHandler := web.NewUserHandler(userService)
 	engine := ioc.InitWebServer(v, userHandler)
 	return engine
+}
+
+func InitGrpcServer() *AppGrpcServe {
+	userService := service.NewUserService()
+	userServiceServe := grpc.NewUserServiceServer(userService)
+	server := ioc.NewGrpcServer(userServiceServe)
+	appGrpcServe := &AppGrpcServe{
+		server: server,
+	}
+	return appGrpcServe
 }
