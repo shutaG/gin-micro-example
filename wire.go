@@ -15,6 +15,7 @@ func InitWebServer() *gin.Engine {
 	wire.Build(
 		ioc.InitGinMiddlewares,
 		ioc.InitWebServer,
+		ioc.InitUserClient,
 		web.NewUserHandler,
 		service.NewUserService,
 	)

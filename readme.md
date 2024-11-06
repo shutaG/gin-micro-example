@@ -7,9 +7,6 @@
 - [ ] 增加微服务客户端端示例
 - [ ] 使用etcd完成服务注册与发现
 
-
-
-
 ## 接入prometheus
 - 使用docker compose实现prometheus的部署
 - 在8081端口暴露了采集接口metrics
@@ -41,3 +38,10 @@ go-wrk -c 20 -d 50 http://localhost:8080/users/hello
 > https://buf.build/docs/installation
 > 生成命令：
 > buf generate api/proto
+
+## 增加微服务客户端调用
+- 在ioc中增加了远程调用的初始化
+- 在web层增加了rpc调用的server
+- 修改了web层调用的参数
+
+

@@ -19,7 +19,8 @@ import (
 func InitWebServer() *gin.Engine {
 	v := ioc.InitGinMiddlewares()
 	userService := service.NewUserService()
-	userHandler := web.NewUserHandler(userService)
+	userServiceClient := ioc.InitUserClient()
+	userHandler := web.NewUserHandler(userService, userServiceClient)
 	engine := ioc.InitWebServer(v, userHandler)
 	return engine
 }

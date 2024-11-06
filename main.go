@@ -9,8 +9,6 @@ import (
 
 func main() {
 
-	// 初始化engin
-	server := InitWebServer()
 	var err error
 	go func() {
 		// 启动grpc
@@ -20,6 +18,9 @@ func main() {
 			panic(err)
 		}
 	}()
+
+	// 初始化engin
+	server := InitWebServer()
 
 	server.GET("/hello", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, map[string]string{"hello": "world"})

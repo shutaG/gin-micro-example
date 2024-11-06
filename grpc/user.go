@@ -1,6 +1,7 @@
 package grpc
 
 import (
+	"fmt"
 	userv1 "gin-micro-example/api/proto/gen/user/v1"
 	"gin-micro-example/internal/domain"
 	"gin-micro-example/internal/service"
@@ -22,6 +23,7 @@ func (i *UserServiceServe) Register(s *grpc.Server) {
 }
 
 func (u *UserServiceServe) Get(ctx context.Context, request *userv1.UserRequest) (*userv1.UserResponse, error) {
+	fmt.Println("通过rpc调用")
 	user, err := u.svc.Get(ctx, request.GetId())
 	if err != nil {
 		return nil, err
